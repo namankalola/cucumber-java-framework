@@ -6,15 +6,16 @@ import io.cucumber.java.Before;
 import utilities.WebDriverManagerThread;
 
 public class Base {
-	protected WebDriver driver;
+    protected WebDriver driver;
 
-	@Before
-	public void setup(String browserType) {
-		driver = WebDriverManagerThread.getInstance(browserType).getDriver();
-	}
+    @Before
+    public void setup() {
+        String browserType = System.getProperty("browser", "chrome"); // Default to Chrome
+        driver = WebDriverManagerThread.getInstance(browserType).getDriver();
+    }
 
-	@After
-	public void tearDown() {
-		WebDriverManagerThread.clearThread();
-	}
+    @After
+    public void tearDown() {
+        WebDriverManagerThread.clearThread();
+    }
 }
