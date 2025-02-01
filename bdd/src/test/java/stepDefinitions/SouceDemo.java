@@ -10,7 +10,7 @@ import io.cucumber.java.en.When;
 import pages.LoginPage;
 import runners.TestRunner;
 import utilities.ConfigManager;
-import utilities.WebDriverManagerThread;
+import utilities.WebDriverManager;
 
 public class SouceDemo {
 
@@ -21,7 +21,7 @@ public class SouceDemo {
 	@Before
     public void setup() {
         String browserType = TestRunner.getBrowser();
-        driver = WebDriverManagerThread.getInstance(browserType).getDriver();
+        driver = WebDriverManager.getInstance(browserType).getDriver();
         System.out.println("Started test on: " + browserType);
         configManager = new ConfigManager();
         configManager.loadProperties(TestRunner.getEnvironment());  
@@ -29,7 +29,7 @@ public class SouceDemo {
 
     @After
     public void tearDown() {
-        WebDriverManagerThread.clearThread();
+        WebDriverManager.clearThread();
     }
 
     @Given("User is on Swag Labs login page")

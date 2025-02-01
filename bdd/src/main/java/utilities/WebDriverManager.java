@@ -16,11 +16,11 @@ import org.openqa.selenium.firefox.FirefoxDriver;
  */
 
 
-public class WebDriverManagerThread {
-	private volatile static WebDriverManagerThread instance;
+public class WebDriverManager {
+	private volatile static WebDriverManager instance;
 	private static final ThreadLocal<WebDriver> threadDriver = new ThreadLocal<>();
 
-	private WebDriverManagerThread() {
+	private WebDriverManager() {
 	}
 
 	private void initializeWebDriver(String browserType) {
@@ -40,10 +40,10 @@ public class WebDriverManagerThread {
 		}
 	}
 
-	public static WebDriverManagerThread getInstance(String browserType) {
+	public static WebDriverManager getInstance(String browserType) {
 		if (instance == null) {
-			synchronized (WebDriverManagerThread.class) {
-				instance = new WebDriverManagerThread();
+			synchronized (WebDriverManager.class) {
+				instance = new WebDriverManager();
 			}
 		}
 		if(threadDriver.get()==null) {
