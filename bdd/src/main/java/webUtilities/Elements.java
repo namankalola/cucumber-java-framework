@@ -1,6 +1,9 @@
 package webUtilities;
 
 import java.time.Duration;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -10,12 +13,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import utilities.LoggerManager;
 
-import java.util.List;
-import java.util.logging.Logger;
-
 public class Elements {
-	private WebDriver driver;
-	private By by;
+	private final WebDriver driver;
+	private final By by;
 	protected static final Logger logger = LoggerManager.getLogger();
 
 	public Elements(By by, WebDriver driver) {
@@ -27,7 +27,7 @@ public class Elements {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 		try {
 			WebElement element = wait.until(ExpectedConditions.elementToBeClickable(by));
-			logger.info("Clicking element: " + by);
+			logger.log(Level.INFO, "Clicking element: {0}", by);
 			element.click();
 		} catch (Exception e) {
 			throw new RuntimeException("Element not clickable: " + by, e);
@@ -35,12 +35,12 @@ public class Elements {
 	}
 
 	public String getText() {
-		logger.info("Getting text from element: " + by);
+		logger.log(Level.INFO, "Getting text from element: {0}", by);
 		return getElement().getText();
 	}
 
 	public boolean isDisplayed() {
-		logger.info("Checking if element is displayed: " + by);
+		logger.log(Level.INFO, "Checking if element is displayed: {0}", by);
 		try {
 			return getElement().isDisplayed();
 		} catch (Exception e) {
@@ -71,7 +71,7 @@ public class Elements {
 	}
 
 	protected boolean isEnabled() {
-		logger.info("Checking if element is Enabled: " + by);
+		logger.log(Level.INFO, "Checking if element is Enabled: {0}", by);
 		try {
 			return getElement().isEnabled();
 		} catch (Exception e) {

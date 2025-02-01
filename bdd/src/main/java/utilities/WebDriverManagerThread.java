@@ -18,7 +18,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class WebDriverManagerThread {
 	private volatile static WebDriverManagerThread instance;
-	private static ThreadLocal<WebDriver> threadDriver = new ThreadLocal<>();
+	private static final ThreadLocal<WebDriver> threadDriver = new ThreadLocal<>();
 
 	private WebDriverManagerThread() {
 	}

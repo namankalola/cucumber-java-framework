@@ -8,8 +8,8 @@ public class Button extends Elements {
 		super(by, driver);
 	}
 	
-	public void click() {
-		getElement().click();;
+	public void clickButton() {
+		getElement().click();
 	}
 	
 }

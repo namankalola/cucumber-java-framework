@@ -1,5 +1,7 @@
 package webUtilities;
 
+import java.util.logging.Level;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -9,25 +11,25 @@ public class TextBox extends Elements {
 	private By by;
 	public TextBox(By by, WebDriver driver) {
 		super(by, driver);
-		this.by = by;
+
 	}
 
 	public void enterText(String text) {
-		logger.info("Entering text: '" + text + "' into element: " + by);
+		logger.log(Level.INFO, "Entering text: ''{0}'' into element: {1}", new Object[]{text, by});
 		getElement().sendKeys(text);
 	}
 
 	public void clearText() {
-		logger.info("Clearing text in element: " + by);
+		logger.log(Level.INFO, "Clearing text in element: {0}", by);
 		getElement().clear();
 	}
 
 	public void clearTextUsingKeyboard() {
 		WebElement webElement = getElement();
-		logger.info("Clearing text in element: " + by + " using keyboard.");
+		logger.log(Level.INFO, "Clearing text in element: {0} using keyboard.", by);
 		webElement.sendKeys(Keys.CONTROL, "a");
 		webElement.sendKeys(Keys.DELETE);
-		if (!webElement.getAttribute("value").isEmpty()) {
+		if (!webElement.getDomProperty("value").isEmpty()) {
 			throw new RuntimeException("Failed to clear text in element: " + by);
 		}
 	}
