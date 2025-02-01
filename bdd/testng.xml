@@ -3,6 +3,7 @@
 <suite name="Cucumber Test Suite" parallel="tests" thread-count="3">
     <test name="Cucumber Tests">
         <parameter name="browser" value="firefox"/>
+        <parameter name="environment" value="test"/>
         <classes>
             <class name="runners.TestRunner"/>
         </classes>

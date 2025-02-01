@@ -9,18 +9,22 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
 import pages.LoginPage;
 import runners.TestRunner;
+import utilities.ConfigManager;
 import utilities.WebDriverManagerThread;
 
 public class SouceDemo {
 
     private LoginPage loginPage;
     protected WebDriver driver;
+    private ConfigManager configManager;
 
 	@Before
     public void setup() {
         String browserType = TestRunner.getBrowser();
         driver = WebDriverManagerThread.getInstance(browserType).getDriver();
         System.out.println("Started test on: " + browserType);
+        configManager = new ConfigManager();
+        configManager.loadProperties(TestRunner.getEnvironment());  
     }
 
     @After
@@ -28,16 +32,17 @@ public class SouceDemo {
         WebDriverManagerThread.clearThread();
     }
 
-    @Given("User is on OrangeHRM login page")
+    @Given("User is on Swag Labs login page")
     public void user_is_on_login_page() {
-        driver.get("https://www.saucedemo.com/"); // Update URL
+        String appUrl = configManager.getProperty("app.url");
+        driver.get(appUrl); // Update URL
         loginPage = new LoginPage(driver);
     }
 
     @When("User enters username {string} and password {string}")
     public void user_logs_in(String username, String password) {
-        loginPage.enterUsername(username);
-        loginPage.enterPassword(password);
+        loginPage.enterUsername(configManager.getProperty(username));
+        loginPage.enterPassword(configManager.getProperty(password));
     }
 
     @And("User clicks on Login button")
