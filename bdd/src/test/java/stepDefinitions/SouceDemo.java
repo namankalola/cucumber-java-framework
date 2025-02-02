@@ -7,6 +7,7 @@ import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
+import pages.HomePage;
 import pages.LoginPage;
 import runners.TestRunner;
 import utilities.ConfigManager;
@@ -14,17 +15,19 @@ import utilities.WebDriverManager;
 
 public class SouceDemo {
 
+    // Webpages class
     private LoginPage loginPage;
+    private HomePage homePage;
     protected WebDriver driver;
     private ConfigManager configManager;
 
-	@Before
+    @Before
     public void setup() {
         String browserType = TestRunner.getBrowser();
         driver = WebDriverManager.getInstance(browserType).getDriver();
         System.out.println("Started test on: " + browserType);
         configManager = new ConfigManager();
-        configManager.loadProperties(TestRunner.getEnvironment());  
+        configManager.loadProperties(TestRunner.getEnvironment());
     }
 
     @After
@@ -48,5 +51,22 @@ public class SouceDemo {
     @And("User clicks on Login button")
     public void user_clicks_on_login_button() {
         loginPage.clickLogin();
+    }
+
+    @And("Products page displayed")
+    public void product_page_displayed() {
+        homePage = new HomePage(driver);
+        homePage.productHomePageDisplayed();
+    }
+
+    @When("User clicks on humbergur menu and Logout link")
+    public void user_logout() {
+        homePage.clickHumburger();
+        homePage.clickLogout();
+    }
+
+    @And("Swag Labs Login page displayed")
+    public void login_page_displayed() {
+        loginPage.loginPageDisplayed();
     }
 }

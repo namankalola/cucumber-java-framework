@@ -83,4 +83,8 @@ public class Elements {
 		WebDriverWait wait = new WebDriverWait(driver, timeout);
 		return wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(by));
 	}
+
+	public String getCurrentAppUrl(){
+		return driver.getCurrentUrl();
+	}
 }
