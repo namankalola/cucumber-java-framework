@@ -2,7 +2,6 @@ package webUtilities;
 
 import java.util.List;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -10,9 +9,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
 public class Dropdown extends Elements {
-
-    private static final Logger logger = Logger.getLogger(Dropdown.class.getName());
-    private By by;
+    private final By by;
     public Dropdown(By by, WebDriver driver) {
         super(by, driver);
         this.by = by;

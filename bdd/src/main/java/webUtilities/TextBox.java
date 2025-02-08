@@ -8,7 +8,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 public class TextBox extends Elements {
-	private By by;
+	private final By by;
 	public TextBox(By by, WebDriver driver) {
 		super(by, driver);
 		this.by = by;

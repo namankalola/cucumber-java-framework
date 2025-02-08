@@ -1,15 +1,14 @@
 package webUtilities;
 
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 public class Checkbox extends Elements {
 
-    private static final Logger logger = Logger.getLogger(Checkbox.class.getName());
-    private By by;
+    // protected static final Logger logger/ = LoggerManager.getLogger();
+    private final By by;
     public Checkbox(By by, WebDriver driver) {
         super(by, driver);
         this.by = by;

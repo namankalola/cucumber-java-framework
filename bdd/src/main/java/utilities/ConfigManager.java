@@ -11,9 +11,9 @@ public class ConfigManager {
     public void loadProperties(String environment) {
         try {
             String filePath = "src/test/resources/configs/" + environment + ".properties";
-            FileInputStream fileInputStream = new FileInputStream(filePath);
-            properties.load(fileInputStream);
-            fileInputStream.close();
+            try (FileInputStream fileInputStream = new FileInputStream(filePath)) {
+                properties.load(fileInputStream);
+            }
         } catch (IOException e) {
             System.out.println("Error loading properties file: " + e.getMessage());
         }

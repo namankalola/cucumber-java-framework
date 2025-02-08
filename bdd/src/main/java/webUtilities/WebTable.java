@@ -2,16 +2,13 @@ package webUtilities;
 
 import java.util.List;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 public class WebTable extends Elements {
-
-    private static final Logger logger = Logger.getLogger(WebTable.class.getName());
-    private By by;
+    private final By by;
 
     public WebTable(By by, WebDriver driver) {
         super(by, driver);

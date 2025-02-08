@@ -11,6 +11,7 @@ import swagLabs.pages.HomePage;
 import swagLabs.pages.LoginPage;
 import swagLabs.runners.TestRunner;
 import utilities.ConfigManager;
+import utilities.ExcelUtils;
 import utilities.WebDriverManager;
 
 public class SouceDemo {
@@ -20,6 +21,8 @@ public class SouceDemo {
     private HomePage homePage;
     protected WebDriver driver;
     private ConfigManager configManager;
+
+    private ExcelUtils excel = null;
 
     @Before
     public void setup() {
@@ -33,6 +36,7 @@ public class SouceDemo {
     @After
     public void tearDown() {
         WebDriverManager.clearThread();
+        ExcelUtils.cleanup();
     }
 
     @Given("User is on Swag Labs login page")
@@ -42,10 +46,16 @@ public class SouceDemo {
         loginPage = new LoginPage(driver);
     }
 
+    @Given("I want to read test data from {string} sheet")
+    public void I_want_to_read_test_data_from_sheet(String sheetName) {
+        ExcelUtils.initialize(sheetName, configManager.getProperty("testdatafile"));
+        excel = ExcelUtils.getInstance();
+    }
+
     @When("User enters username {string} and password {string}")
     public void user_logs_in(String username, String password) {
-        loginPage.enterUsername(configManager.getProperty(username));
-        loginPage.enterPassword(configManager.getProperty(password));
+        loginPage.enterUsername(excel.getFieldValue("app.username"));
+        loginPage.enterPassword(excel.getFieldValue("app.password"));
     }
 
     @And("User clicks on Login button")
@@ -74,4 +84,6 @@ public class SouceDemo {
     public void This_user_has_been_locked_out_message_displayed() {
         loginPage.lockedMessageDisplayed();
     }
+
+
 }
