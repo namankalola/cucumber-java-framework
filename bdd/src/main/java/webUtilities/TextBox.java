@@ -11,7 +11,7 @@ public class TextBox extends Elements {
 	private By by;
 	public TextBox(By by, WebDriver driver) {
 		super(by, driver);
-
+		this.by = by;
 	}
 
 	public void enterText(String text) {

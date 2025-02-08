@@ -27,7 +27,7 @@ public class Elements {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 		try {
 			WebElement element = wait.until(ExpectedConditions.elementToBeClickable(by));
-			logger.log(Level.INFO, "Clicking element: {0}", by);
+			logger.log(Level.INFO, "Clicking element: ", by);
 			element.click();
 		} catch (Exception e) {
 			throw new RuntimeException("Element not clickable: " + by, e);
@@ -35,12 +35,12 @@ public class Elements {
 	}
 
 	public String getText() {
-		logger.log(Level.INFO, "Getting text from element: {0}", by);
+		logger.log(Level.INFO, "Getting text from element: ", by);
 		return getElement().getText();
 	}
 
 	public boolean isDisplayed() {
-		logger.log(Level.INFO, "Checking if element is displayed: {0}", by);
+		logger.log(Level.INFO, "Checking if element is displayed: ", by);
 		try {
 			return getElement().isDisplayed();
 		} catch (Exception e) {
@@ -71,7 +71,7 @@ public class Elements {
 	}
 
 	protected boolean isEnabled() {
-		logger.log(Level.INFO, "Checking if element is Enabled: {0}", by);
+		logger.log(Level.INFO, "Checking if element is Enabled: ", by);
 		try {
 			return getElement().isEnabled();
 		} catch (Exception e) {
