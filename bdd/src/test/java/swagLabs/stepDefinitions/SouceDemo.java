@@ -1,4 +1,4 @@
-package stepDefinitions;
+package swagLabs.stepDefinitions;
 
 import org.openqa.selenium.WebDriver;
 
@@ -7,9 +7,9 @@ import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
-import pages.HomePage;
-import pages.LoginPage;
-import runners.TestRunner;
+import swagLabs.pages.HomePage;
+import swagLabs.pages.LoginPage;
+import swagLabs.runners.TestRunner;
 import utilities.ConfigManager;
 import utilities.WebDriverManager;
 
@@ -68,5 +68,10 @@ public class SouceDemo {
     @And("Swag Labs Login page displayed")
     public void login_page_displayed() {
         loginPage.loginPageDisplayed();
+    }
+
+    @When("This user has been locked out - message displayed")
+    public void This_user_has_been_locked_out_message_displayed() {
+        loginPage.lockedMessageDisplayed();
     }
 }

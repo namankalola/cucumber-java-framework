@@ -1,4 +1,4 @@
-package pages;
+package swagLabs.pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -15,6 +15,7 @@ public class LoginPage {
 	private final By passwordLocator = By.xpath("//input[@id='password']");
 	private final By loginButtonLocator = By.xpath("//input[@id='login-button']");
 	private final By loginPageLogo = By.xpath("//div[@class='login_logo']");
+	private final By lockedMessage = By.xpath("//h3[contains(text(),'Sorry, this user has been locked out.')]");
 
 	public LoginPage(WebDriver driver) {
 		this.driver = driver;
@@ -34,5 +35,9 @@ public class LoginPage {
 
 	public void loginPageDisplayed(){
 		Assert.assertTrue(new Elements(loginPageLogo,driver).isDisplayed());
+	}
+
+	public void lockedMessageDisplayed(){
+		Assert.assertTrue(new Elements(lockedMessage, driver).isDisplayed());
 	}
 }
