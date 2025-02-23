@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -16,12 +15,12 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 public final class ExcelUtils {
 
     private static final Logger logger = Logger.getLogger(ExcelUtils.class.getName());
-    private static final String FILE_PATH = "src/test/resources/testdata/"; // Excel file path
+    private static final String FILE_PATH = "src/test/resources/testdata/";
     private static final ThreadLocal<ExcelUtils> threadLocalInstance = new ThreadLocal<>();
-    
+
     private Workbook workbook;
     private Sheet sheet;
-    private Map<String, String> dataMap; 
+    private Map<String, String> dataMap;
 
     private ExcelUtils(String sheetName, String fileName) {
         try (FileInputStream fis = new FileInputStream(FILE_PATH + fileName)) {
@@ -34,16 +33,16 @@ public final class ExcelUtils {
     }
 
     public static void initialize(String sheetName, String fileName) {
-        if (threadLocalInstance.get() == null) {
-            threadLocalInstance.set(new ExcelUtils(sheetName, fileName));
-        }
+        logger.log(Level.INFO, "Initializing ExcelUtils for Sheet: {0} | File: {1}", new Object[]{sheetName, fileName});
+        threadLocalInstance.set(new ExcelUtils(sheetName, fileName));
     }
 
     public static ExcelUtils getInstance() {
-        if (threadLocalInstance.get() == null) {
+        ExcelUtils instance = threadLocalInstance.get();
+        if (instance == null) {
             throw new IllegalStateException("ExcelUtils not initialized for this thread.");
         }
-        return threadLocalInstance.get();
+        return instance;
     }
 
     public void setSheet(String sheetName) {
@@ -58,17 +57,19 @@ public final class ExcelUtils {
     private void loadDataIntoMap() {
         dataMap = new HashMap<>();
         for (Row row : sheet) {
-            Cell keyCell = row.getCell(0);  // Column A (Field Name)
-            Cell valueCell = row.getCell(1); // Column B (Field Value)
-
-            if (keyCell != null && valueCell != null) {
-                dataMap.put(keyCell.toString().trim(), valueCell.toString().trim());
+            if (row.getCell(0) != null && row.getCell(1) != null) {
+                String key = row.getCell(0).getStringCellValue().trim();
+                String value = row.getCell(1).getStringCellValue().trim();
+                dataMap.put(key, value);
             }
         }
+        logger.log(Level.INFO, "Loaded {0} data entries from sheet.", dataMap.size());
     }
 
     public String getFieldValue(String fieldName) {
-        return dataMap.getOrDefault(fieldName, null);
+        String value = dataMap.getOrDefault(fieldName, "Field Not Found");
+        logger.log(Level.INFO, "Fetching field: {0} | Value: {1}", new Object[]{fieldName, value});
+        return value;
     }
 
     public void closeWorkbook() {
@@ -86,6 +87,7 @@ public final class ExcelUtils {
         if (threadLocalInstance.get() != null) {
             threadLocalInstance.get().closeWorkbook();
             threadLocalInstance.remove();
+            logger.log(Level.INFO, "Cleaned up ExcelUtils instance.");
         }
     }
 }

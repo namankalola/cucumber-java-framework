@@ -22,8 +22,6 @@ public class SouceDemo {
     protected WebDriver driver;
     private ConfigManager configManager;
 
-    private ExcelUtils excel = null;
-
     @Before
     public void setup() {
         String browserType = TestRunner.getBrowser();
@@ -49,13 +47,12 @@ public class SouceDemo {
     @Given("I want to read test data from {string} sheet")
     public void I_want_to_read_test_data_from_sheet(String sheetName) {
         ExcelUtils.initialize(sheetName, configManager.getProperty("testdatafile"));
-        excel = ExcelUtils.getInstance();
     }
 
     @When("User enters username {string} and password {string}")
     public void user_logs_in(String username, String password) {
-        loginPage.enterUsername(excel.getFieldValue("app.username"));
-        loginPage.enterPassword(excel.getFieldValue("app.password"));
+        loginPage.enterUsername(ExcelUtils.getInstance().getFieldValue(username));
+        loginPage.enterPassword(ExcelUtils.getInstance().getFieldValue(password));
     }
 
     @And("User clicks on Login button")
@@ -84,6 +81,4 @@ public class SouceDemo {
     public void This_user_has_been_locked_out_message_displayed() {
         loginPage.lockedMessageDisplayed();
     }
-
-
 }
